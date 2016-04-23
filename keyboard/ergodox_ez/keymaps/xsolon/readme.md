@@ -9,3 +9,7 @@
 
 ## About
 Visual Studio c# with viemu in mind. Enjoy!
+Goals:
+	- Querty compatibility (few changes to default layout)
+	- vi compatibility
+	- Visual Studio shortcuts
