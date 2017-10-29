@@ -167,13 +167,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/* Keymap 3:  Visual Studio Layer
 	*
 	* ,--------------------------------------------------.           ,--------------------------------------------------.
-	* |        |  F1  |  F2  |  F3  |Alt+F4|  F5  |      |           | Calc |ShftF6|  F7  |Shift+F6| F12  |  F10 |   F11  |
-	* |--------+------+------+------+------+-------------|           |------+------+------+--------+------+------+--------|
-	* |        |Public|Static|string|int   |return|      |           |      |//TODO|      |        |      |      |   F12  |
-	* |--------+------+------+------+------+------|      |           |      |------+------+--------+------+------+--------|
-	* |        |Privat|Const |var   |float |null  |------|           |------|new   |      |        |      |      |        |
-	* |--------+------+------+------+------+------|      |           |      |------+------+--------+------+------+--------|
-	* |        |      |      |void  |bool  |break;|      |           |      |using |      |        |      |      |        |
+	* |        |  F1  |  F2  |  F3  |Alt+F4|  F5  |      |           | Calc |ShftF6         |  F7  |Shift+F6| F12  |  F10 |   F11  |
+	* |--------+------+------+------+------+-------------|           |------+------         +------+--------+------+------+--------|
+	* |        |Public|Static|string|int   |return|      |           |      |RoyalTs PrevTab|      |        |      |      |   F12  |
+	* |--------+------+------+------+------+------|      |           |      |------         +------+--------+------+------+--------|
+	* |        |Privat|Const |var   |float |null  |------|           |------|new            |      |        |      |      |        |
+	* |--------+------+------+------+------+------|      |           |      |------         +------+--------+------+------+--------|
+	* |        |TODO  |using |void  |bool  |break;|      |           |      |RoyalTs NextTab|      |        |      |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+--------+------+------+--------'
 	*   |      | Alt  |      |      |      |                                       |      |        |      |      |      |
 	*   `----------------------------------'                                       `----------------------------------'
@@ -191,20 +191,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_F1, KC_F2, KC_F3, LALT(KC_F4), KC_F5, KC_TRNS,
 		KC_TRNS, M(MACRO_PUBLIC), M(MACRO_STATIC), M(MACRO_STRING), M(MACRO_INT), M(MACRO_RETURN), KC_TRNS,
 		KC_TRNS, M(MACRO_PRIVATE), M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
-		KC_TRNS, KC_TRNS, KC_TRNS, M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
+		KC_TRNS, M(MACRO_TODO), M(MACRO_USING), M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
 		KC_TRNS, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_F5, KC_F10,
 		KC_F11,
 		KC_TRNS, KC_TRNS, KC_F12,
 		// right hand
-		KC_CALCULATOR, LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
-		KC_TRNS, M(MACRO_TODO), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
-		M(MACRO_NEW), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, M(MACRO_USING), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS,
+		KC_CALCULATOR,	LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
+		KC_TRNS,		ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_PGUP), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
+		M(MACRO_NEW),	KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS,		ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_PGDN), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS,		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS,		KC_TRNS,
 		KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS
+		KC_TRNS,		KC_TRNS, KC_TRNS
 	)
 
 };
