@@ -28,7 +28,7 @@
 
 #define MACRO_TODO 23
 #define MACRO_NEW 24
-#define MACRO_PARENTHESE 25
+#define MACRO_USING 25
 
 enum custom_keycodes {
 	PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
 	* | Tab    |   Q  |   W  |   E  |   R  |   T  | Paste|           | Undo |   Y  |   U  |   I  |   O  |   P  |   \    |
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* | Tab/L2 | A    | S    |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L3|' / Cmd |
+	* | Tab/L2 |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L3|' / Cmd |
 	* |--------+------+------+------+------+------| Copy |           | Redo |------+------+------+------+------+--------|
 	* | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| RShift |
 	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -173,16 +173,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
 	* |        |Privat|Const |var   |float |null  |------|           |------|new   |      |      |      |      |        |
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* |        |      |      |void  |bool  |break;|      |           |      |();   |      |      |      |      |        |
+	* |        |      |      |void  |bool  |break;|      |           |      |using |      |      |      |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
 	*   |      | Alt  |      |      |      |                                       |      |      |      |      |      |
 	*   `----------------------------------'                                       `----------------------------------'
 	*                                        ,-------------.       ,-------------.
-	*                                        |      | Cut  |       |      |      |
+	*                                        | F5   | F10  |       |      |      |
 	*                                 ,------|------|------|       |------+------+------.
-	*                                 |      |      |      |       |      |      |      |
+	*                                 |      |      | F11  |       |      |      |      |
 	*                                 |      |      |------|       |------|      |      |
-	*                                 |      |      |      |       |      |      |      |
+	*                                 |      |      | F12  |       |      |      |      |
 	*                                 `--------------------'       `--------------------'
 	*/
 	// VS + FKEYS + MACROS
@@ -193,14 +193,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, M(MACRO_PRIVATE), M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
 		KC_TRNS, KC_TRNS, KC_TRNS, M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
 		KC_TRNS, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS,
-		KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_F5, KC_F10,
+		KC_F11,
+		KC_TRNS, KC_TRNS, KC_F12,
 		// right hand
 		KC_CALCULATOR, LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
 		KC_TRNS, M(MACRO_TODO), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
 		M(MACRO_NEW), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, M(MACRO_PARENTHESE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, M(MACRO_USING), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS,
 		KC_TRNS,
@@ -229,9 +229,83 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		break;
 	case MACRO_PUBLIC:
 		if (record->event.pressed) {
-			return SEND_STRING("public");
+			SEND_STRING("public ");
 		}
-		break;	
+		break;
+	case MACRO_PRIVATE:
+		if (record->event.pressed) {
+			SEND_STRING("private");
+		}
+		break;
+	case MACRO_STATIC:
+		if (record->event.pressed) {
+			SEND_STRING("static ");
+		}
+		break;
+	case MACRO_CONST:
+		if (record->event.pressed) {
+			SEND_STRING("const ");
+		}
+		break;
+	case MACRO_VOID:
+		if (record->event.pressed) {
+			SEND_STRING("void method() {}");
+		}
+		break;
+	case MACRO_VAR:
+		if (record->event.pressed) {
+			SEND_STRING("var p = new VAR();");
+		}
+		break;
+	case MACRO_STRING:
+		if (record->event.pressed) {
+			SEND_STRING("string s = ;");
+		}
+		break;
+	case MACRO_BOOL:
+		if (record->event.pressed) {
+			SEND_STRING("bool b = false;");
+		}
+		break;
+	case MACRO_INT:
+		if (record->event.pressed) {
+			SEND_STRING("int i = 0;");
+		}
+		break;
+	case MACRO_FLOAT:
+		if (record->event.pressed) {
+			SEND_STRING("float ");
+		}
+		break;
+	case MACRO_RETURN:
+		if (record->event.pressed) {
+			SEND_STRING("return ;");
+		}
+		break;
+	case MACRO_NULL:
+		if (record->event.pressed) {
+			SEND_STRING("null ");
+		}
+	case MACRO_BREAK:
+		if (record->event.pressed) {
+			SEND_STRING("break;");
+		}
+		break;
+	case MACRO_TODO:
+		if (record->event.pressed) {
+			SEND_STRING("///TODO ");
+		}
+		break;
+	case MACRO_NEW:
+		if (record->event.pressed) {
+			SEND_STRING("new ();");
+		}
+		break;
+	case MACRO_USING:
+		if (record->event.pressed) {
+			SEND_STRING("using(var d = new ()){}");
+		}
+		break;
 	}
 	return MACRO_NONE;
 };
