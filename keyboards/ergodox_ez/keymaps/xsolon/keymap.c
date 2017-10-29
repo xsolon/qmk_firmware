@@ -177,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+------|      |           |      |-----------+------+--------+------+------+--------|
 	* |        |TODO  |using |void  |bool  |break;|      |           |      |RTs NextTab|      |        |      |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+--------+------+------+--------'
-	*   |      | Alt  |      |      |      |                                       |      |        |      |      |      |
+	*   |      | Alt  |getset|      |      |                                       |      |        |      |      |      |
 	*   `----------------------------------'                                       `----------------------------------'
 	*                                        ,-------------.       ,-------------.
 	*                                        | F5   | F10  |       |      |      |
@@ -190,14 +190,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// VS + FKEYS + MACROS
 	[VSFN] = LAYOUT_ergodox(
 		// left hand
-		KC_TRNS, KC_F1, KC_F2, KC_F3, LALT(KC_F4), KC_F5, KC_TRNS,
-		KC_TRNS, M(MACRO_PUBLIC), M(MACRO_STATIC), M(MACRO_STRING), M(MACRO_INT), M(MACRO_RETURN), KC_TRNS,
-		KC_TRNS, M(MACRO_PRIVATE), M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
-		KC_TRNS, M(MACRO_TODO), M(MACRO_USING), M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
-		KC_TRNS, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS,
-										KC_F5,			KC_F10,
+		KC_TRNS, KC_F1,				KC_F2, KC_F3, LALT(KC_F4), KC_F5, KC_TRNS,
+		KC_TRNS, M(MACRO_PUBLIC),	M(MACRO_STATIC), M(MACRO_STRING), M(MACRO_INT), M(MACRO_RETURN), KC_TRNS,
+		KC_TRNS, M(MACRO_PRIVATE),	M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
+		KC_TRNS, M(MACRO_TODO),		M(MACRO_USING), M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
+		KC_TRNS, KC_LALT,			M(MACRO_GETSET), KC_TRNS, KC_TRNS,
+										 KC_F5,			KC_F10,
 														KC_F11,
-								KC_TRNS, LCTL(KC_4),	KC_F12,
+						M(MACRO_FORMAT), LCTL(KC_4),	KC_F12,
 		// right hand
 		KC_CALCULATOR,	LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
 		KC_TRNS,		ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_PGUP), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
