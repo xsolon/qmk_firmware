@@ -29,6 +29,8 @@
 #define MACRO_TODO 23
 #define MACRO_NEW 24
 #define MACRO_USING 25
+#define MACRO_GETSET 26
+#define MACRO_FORMAT 27
 
 enum custom_keycodes {
 	PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -115,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 								   RGB_VAD, RGB_VAI, KC_TRNS,
 		// right hand
 		KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
-		KC_TRNS, KC_PGUP, KC_HOME, KC_END, KC_EQL, KC_ASTR, KC_F12,		
+		KC_TRNS, KC_PGUP, KC_HOME, KC_END, KC_EQL, KC_ASTR, KC_F12,
 				 KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PLUS, KC_TRNS,
 		KC_TRNS, KC_PGDN, ALT_T(KC_APP), KC_2, KC_3, KC_BSLS, KC_TRNS,
 		KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
@@ -167,13 +169,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/* Keymap 3:  Visual Studio Layer
 	*
 	* ,--------------------------------------------------.           ,--------------------------------------------------.
-	* |        |  F1  |  F2  |  F3  |Alt+F4|  F5  |      |           | Calc |ShftF6         |  F7  |Shift+F6| F12  |  F10 |   F11  |
-	* |--------+------+------+------+------+-------------|           |------+------         +------+--------+------+------+--------|
-	* |        |Public|Static|string|int   |return|      |           |      |RoyalTs PrevTab|      |        |      |      |   F12  |
-	* |--------+------+------+------+------+------|      |           |      |------         +------+--------+------+------+--------|
-	* |        |Privat|Const |var   |float |null  |------|           |------|new            |      |        |      |      |        |
-	* |--------+------+------+------+------+------|      |           |      |------         +------+--------+------+------+--------|
-	* |        |TODO  |using |void  |bool  |break;|      |           |      |RoyalTs NextTab|      |        |      |      |        |
+	* |        |  F1  |  F2  |  F3  |Alt+F4|  F5  |      |           | Calc |ShftF6     |  F7  |Shift+F6| F12  |  F10 |   F11  |
+	* |--------+------+------+------+------+-------------|           |------+-----------+------+--------+------+------+--------|
+	* |        |Public|Static|string|int   |return|      |           |      |RTs PrevTab|      |        |      |      |   F12  |
+	* |--------+------+------+------+------+------|      |           |      |-----------+------+--------+------+------+--------|
+	* |        |Privat|Const |var   |float |null  |------|           |------|new        |      |        |      |      |        |
+	* |--------+------+------+------+------+------|      |           |      |-----------+------+--------+------+------+--------|
+	* |        |TODO  |using |void  |bool  |break;|      |           |      |RTs NextTab|      |        |      |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+--------+------+------+--------'
 	*   |      | Alt  |      |      |      |                                       |      |        |      |      |      |
 	*   `----------------------------------'                                       `----------------------------------'
@@ -181,8 +183,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	*                                        | F5   | F10  |       |      |      |
 	*                                 ,------|------|------|       |------+------+------.
 	*                                 |      |      | F11  |       |      |      |      |
-	*                                 |      |      |------|       |------|      |      |
-	*                                 |      |      | F12  |       |      |      |      |
+	*                                 |Format|Reshar|------|       |------|      |      |
+	*                                 |Doc   |Clean | F12  |       |      |      |      |
 	*                                 `--------------------'       `--------------------'
 	*/
 	// VS + FKEYS + MACROS
@@ -193,9 +195,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, M(MACRO_PRIVATE), M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
 		KC_TRNS, M(MACRO_TODO), M(MACRO_USING), M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
 		KC_TRNS, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_F5, KC_F10,
-		KC_F11,
-		KC_TRNS, KC_TRNS, KC_F12,
+										KC_F5,			KC_F10,
+														KC_F11,
+								KC_TRNS, LCTL(KC_4),	KC_F12,
 		// right hand
 		KC_CALCULATOR,	LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
 		KC_TRNS,		ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_PGUP), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
@@ -306,6 +308,17 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 			SEND_STRING("using(var d = new ()){}");
 		}
 		break;
+	case MACRO_GETSET:
+		if (record->event.pressed) {
+			SEND_STRING("{get;set;}");
+		}
+		break;
+	case MACRO_FORMAT:
+		if (record->event.pressed) {
+			return MACRO(D(LCTL), T(E), T(D), U(LCTL), END);
+		}
+		break;
+
 	}
 	return MACRO_NONE;
 };
@@ -333,9 +346,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		return false;
 		break;
-	}
+		}
 	return true;
-}
+	}
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
