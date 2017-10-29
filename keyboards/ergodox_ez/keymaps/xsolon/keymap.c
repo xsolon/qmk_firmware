@@ -8,6 +8,28 @@
 #define MDIA 2 // media keys
 #define VSFN 3 // Visual Studio + FNs
 
+#define MACRO_PUBLIC 10
+#define MACRO_PRIVATE 11
+
+#define MACRO_STATIC 12
+#define MACRO_CONST 13
+
+#define MACRO_VOID 14
+#define MACRO_VAR 15
+#define MACRO_STRING 16
+
+#define MACRO_INT 17
+#define MACRO_FLOAT 18
+#define MACRO_BOOL 19
+
+#define MACRO_RETURN 20
+#define MACRO_NULL 21
+#define MACRO_BREAK 22
+
+#define MACRO_TODO 23
+#define MACRO_NEW 24
+#define MACRO_PARENTHESE 25
+
 enum custom_keycodes {
 	PLACEHOLDER = SAFE_RANGE, // can always be here
 	EPRM,
@@ -59,59 +81,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_PGUP,
 		KC_PGDN,KC_TAB, LT(SYMB,KC_ENT)
 	),
-	/* Keymap 0: Basic layer
-	*
-	* ,--------------------------------------------------.           ,--------------------------------------------------.
-	* |   =    |   1  |   2  |   3  |   4  |   5  | LEFT |           | RIGHT|   6  |   7  |   8  |   9  |   0  |   -    |
-	* |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-	* | Del    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   \    |
-	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* | BkSp   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L2|' / Cmd |
-	* |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
-	* | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| RShift |
-	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-	*   |Grv/L1|  '"  |AltShf| Left | Right|                                       |  Up  | Down |   [  |   ]  | ~L1  |
-	*   `----------------------------------'                                       `----------------------------------'
-	*                                        ,-------------.       ,-------------.
-	*                                        | App  | LGui |       | Alt  |Ctrl/Esc|
-	*                                 ,------|------|------|       |------+--------+------.
-	*                                 |      |      | Home |       | PgUp |        |      |
-	*                                 | Space|Backsp|------|       |------|  Tab   |Enter |
-	*                                 |      |ace   | End  |       | PgDn |        |      |
-	*                                 `--------------------'       `----------------------'
-	*/
-	// If it accepts an argument (i.e, is a function), it doesn't need KC_.
-	// Otherwise, it needs KC_*
-	//[BASE] = LAYOUT_ergodox(  // layer 0 : default
-	//						  // left hand
-	//	KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_LEFT,
-	//	KC_DELT,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(SYMB),
-	//	KC_BSPC,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
-	//	KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   ALL_T(KC_NO),
-	//	LT(SYMB,KC_GRV),KC_QUOT,      LALT(KC_LSFT),  KC_LEFT,KC_RGHT,
-	//	ALT_T(KC_APP),  KC_LGUI,
-	//	KC_HOME,
-	//	KC_SPC,KC_BSPC,KC_END,
-	//	// right hand
-	//	KC_RGHT,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
-	//	TG(SYMB),    KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
-	//	KC_H,   KC_J,  KC_K,   KC_L,   LT(MDIA, KC_SCLN),GUI_T(KC_QUOT),
-	//	MEH_T(KC_NO),KC_N,   KC_M,  KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
-	//	KC_UP, KC_DOWN,KC_LBRC,KC_RBRC,          KC_FN1,
-	//	KC_LALT,        CTL_T(KC_ESC),
-	//	KC_PGUP,
-	//	KC_PGDN,KC_TAB, KC_ENT
-	//),
 	/* Keymap 1: Symbol Layer
 	*
 	* ,---------------------------------------------------.           ,--------------------------------------------------.
 	* |Version  |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
 	* |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
-	* |         |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
-	* |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* |         |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
-	* |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* |         |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
+	* |        |   {  |   }  |  [   |   ]  |  |   |      |           |      | P Up | Home | End  |  =   |   *  |    F12  |
+	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+---------|
+	* |        | End  | Back | Del  |Enter | Esc  |------|           |------| Left | Down |  Up  |Right |   +  |         |
+	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+-------- |
+	* |        |   %  |   ^  |Close |   _  |   ~  |      |           |      | PDown| App  |   2  |   3  |   \  |         |
 	* `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
 	*   | EPRM  |      |      |      |      |                                       |      |    . |   0  |   =  |      |
 	*   `-----------------------------------'                                       `----------------------------------'
@@ -126,19 +105,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	// SYMBOLS
 	[SYMB] = LAYOUT_ergodox(
 		// left hand
-		VRSN,   KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_TRNS,
-		KC_TRNS,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PIPE,KC_TRNS,
-		KC_TRNS,KC_HASH,KC_DLR, KC_LPRN,KC_RPRN,KC_GRV,
-		KC_TRNS,KC_PERC,KC_CIRC,KC_LBRC,KC_RBRC,KC_TILD,KC_TRNS,
-		EPRM,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-		RGB_MOD,KC_TRNS,
-		KC_TRNS,
-		RGB_VAD,RGB_VAI,KC_TRNS,
+		VRSN, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_TRNS,
+		KC_TRNS, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE, KC_TRNS,
+		KC_TRNS, KC_HOME, KC_BSPC, KC_DELT, KC_ENT, KC_ESC,
+		KC_TRNS, KC_PERC, KC_CIRC, LCTL(KC_F4), LSFT(KC_MINS), KC_TILD, KC_TRNS,
+			EPRM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+											RGB_MOD, KC_TRNS,
+													 KC_TRNS,
+								   RGB_VAD, RGB_VAI, KC_TRNS,
 		// right hand
 		KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
-		KC_TRNS, KC_UP,   KC_7,   KC_8,    KC_9,    KC_ASTR, KC_F12,
-		KC_DOWN, KC_4,   KC_5,    KC_6,    KC_PLUS, KC_TRNS,
-		KC_TRNS, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
+		KC_TRNS, KC_PGUP, KC_HOME, KC_END, KC_EQL, KC_ASTR, KC_F12,		
+				 KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PLUS, KC_TRNS,
+		KC_TRNS, KC_PGDN, ALT_T(KC_APP), KC_2, KC_3, KC_BSLS, KC_TRNS,
 		KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
 		RGB_TOG, RGB_SLD,
 		KC_TRNS,
@@ -151,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
 	* |        |      |      | MsUp |      |      |      |           |      |      |      |      |      |      |        |
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |      |      |      |      |  Play  |
+	* |        |      |MsLeft|MsDown|MsRght| Rclk |------|           |------|MsLeft|MsDown| MsUp |MsRght|      |  Play  |
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
 	* |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -160,8 +139,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	*                                        ,-------------.       ,-------------.
 	*                                        |      |      |       |      |      |
 	*                                 ,------|------|------|       |------+------+------.
-	*                                 |      |      |      |       |      |      |Brwser|
-	*                                 |      |      |------|       |------|      |Back  |
+	*                                 |      |      |      |       |      |Brwser|Brwser|
+	*                                 |Lclk  |      |------|       |------|Fwd   |Back  |
 	*                                 |      |      |      |       |      |      |      |
 	*                                 `--------------------'       `--------------------'
 	*/
@@ -169,22 +148,65 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[MDIA] = LAYOUT_ergodox(
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN2,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,
 		KC_TRNS, KC_TRNS,
 		KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_BTN1, KC_TRNS, KC_TRNS,
 		// right hand
-		KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY,
-		KC_TRNS,  KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_TRNS, KC_MPLY,
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
 		KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS,
 		KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_WBAK
+		KC_TRNS, KC_WFWD, KC_WBAK
 	),
+	/* Keymap 3:  Visual Studio Layer
+	*
+	* ,--------------------------------------------------.           ,--------------------------------------------------.
+	* |        |  F1  |  F2  |  F3  |  Kill|  F5  |      |           | Calc |Build |  F7  | Build|SeeDef|  F10 |   F11  |
+	* |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+	* |        |Public|Static|string|int   |return|      |           |      |//TODO|      |      |      |      |   F12  |
+	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+	* |        |Privat|Const |var   |float |null  |------|           |------|new   |      |      |      |      |        |
+	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+	* |        |      |      |void  |bool  |break;|      |           |      |();   |      |      |      |      |        |
+	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+	*   |      | Alt  |      |      |      |                                       |      |      |      |      |      |
+	*   `----------------------------------'                                       `----------------------------------'
+	*                                        ,-------------.       ,-------------.
+	*                                        |      | Cut  |       |      |      |
+	*                                 ,------|------|------|       |------+------+------.
+	*                                 |      |      |      |       |      |      |      |
+	*                                 |      |      |------|       |------|      |      |
+	*                                 |      |      |      |       |      |      |      |
+	*                                 `--------------------'       `--------------------'
+	*/
+	// VS + FKEYS + MACROS
+	[VSFN] = LAYOUT_ergodox(
+		// left hand
+		KC_TRNS, KC_F1, KC_F2, KC_F3, LALT(KC_F4), KC_F5, KC_TRNS,
+		KC_TRNS, M(MACRO_PUBLIC), M(MACRO_STATIC), M(MACRO_STRING), M(MACRO_INT), M(MACRO_RETURN), KC_TRNS,
+		KC_TRNS, M(MACRO_PRIVATE), M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
+		KC_TRNS, KC_TRNS, KC_TRNS, M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
+		KC_TRNS, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS,
+		KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS,
+		// right hand
+		KC_CALCULATOR, LSFT(KC_F6), KC_F7, LSFT(KC_F6), KC_F12, KC_F10, KC_F11,
+		KC_TRNS, M(MACRO_TODO), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_F12,
+		M(MACRO_NEW), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, M(MACRO_PARENTHESE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS,
+		KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS
+	)
+
 };
 
 const uint16_t PROGMEM fn_actions[] = {
@@ -203,6 +225,85 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 	case 1:
 		if (record->event.pressed) { // For resetting EEPROM
 			eeconfig_init();
+		}
+		break;
+	case MACRO_PUBLIC:
+		if (record->event.pressed) {
+			return MACRO(T(P), T(U), T(B), T(L), T(I), T(C), T(SPACE), END);
+		}
+		break;
+	case MACRO_PRIVATE:
+		if (record->event.pressed) {
+			return MACRO(T(P), T(R), T(I), T(V), T(A), T(T), T(E), T(SPACE), END);
+		}
+		break;
+	case MACRO_STATIC:
+		if (record->event.pressed) {
+			return MACRO(T(S), T(T), T(A), T(T), T(I), T(C), T(SPACE), END);
+		}
+		break;
+	case MACRO_CONST:
+		if (record->event.pressed) {
+			return MACRO(T(C), T(O), T(N), T(S), T(T), T(SPACE), END);
+		}
+		break;
+	case MACRO_VOID:
+		if (record->event.pressed) {
+			return MACRO(T(V), T(O), T(I), T(D), T(SPACE), END);
+		}
+		break;
+	case MACRO_VAR:
+		if (record->event.pressed) {
+			return MACRO(T(V), T(A), T(R), T(SPACE), END);
+		}
+		break;
+	case MACRO_STRING:
+		if (record->event.pressed) {
+			return MACRO(T(S), T(T), T(R), T(I), T(N), T(G), T(SPACE), END);
+		}
+		break;
+	case MACRO_BOOL:
+		if (record->event.pressed) {
+			return MACRO(T(B), T(O), T(O), T(L), T(SPACE), END);
+		}
+		break;
+	case MACRO_INT:
+		if (record->event.pressed) {
+			return MACRO(T(I), T(N), T(T), T(SPACE), END);
+		}
+		break;
+	case MACRO_FLOAT:
+		if (record->event.pressed) {
+			return MACRO(T(F), T(L), T(O), T(A), T(T), T(SPACE), END);
+		}
+		break;
+	case MACRO_RETURN:
+		if (record->event.pressed) {
+			return MACRO(T(R), T(E), T(T), T(U), T(R), T(N), END);
+		}
+		break;
+	case MACRO_NULL:
+		if (record->event.pressed) {
+			return MACRO(T(N), T(U), T(L), T(L), END);
+		}
+	case MACRO_BREAK:
+		if (record->event.pressed) {
+			return MACRO(T(B), T(R), T(E), T(A), T(K), T(SCOLON), END);
+		}
+		break;
+	case MACRO_TODO:
+		if (record->event.pressed) {
+			return MACRO(T(SLASH), T(SLASH), D(LSHIFT), T(T), T(O), T(D), T(O), U(LSHIFT), T(SPACE), END);
+		}
+		break;
+	case MACRO_NEW:
+		if (record->event.pressed) {
+			return MACRO(T(N), T(E), T(W), T(SPACE), END);
+		}
+		break;
+	case MACRO_PARENTHESE:
+		if (record->event.pressed) {
+			return MACRO(D(LSHIFT), T(LPRN), T(RPRN), U(LSHIFT), T(SCOLON), END);
 		}
 		break;
 	}
@@ -258,6 +359,9 @@ void matrix_scan_user(void) {
 		break;
 	case MDIA:
 		ergodox_right_led_2_on();
+		break;
+	case 3:
+		ergodox_right_led_3_on();
 		break;
 	default:
 		// none
