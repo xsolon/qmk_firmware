@@ -132,16 +132,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
 	* |        |      |MsLeft|MsDown|MsRght| Rclk |------|           |------|MsLeft|MsDown| MsUp |MsRght|      |  Play  |
 	* |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-	* |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
+	* |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |  MwUp  |
 	* `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-	*   |      |      |      | Lclk | Rclk |                                       |VolUp |VolDn | Mute |      |      |
+	*   |      |      |      | Lclk | Rclk |                                       |VolUp |VolDn | Mute |      | MwDn  |
 	*   `----------------------------------'                                       `----------------------------------'
 	*                                        ,-------------.       ,-------------.
-	*                                        |      |      |       |      |      |
+	*                                        |      |      |       | Mclk |      |
 	*                                 ,------|------|------|       |------+------+------.
-	*                                 |      |      |      |       |      |Brwser|Brwser|
+	*                                 |      |      |      |       | Mbn4 |Brwser|Brwser|
 	*                                 |Lclk  |      |------|       |------|Fwd   |Back  |
-	*                                 |      |      |      |       |      |      |      |
+	*                                 |      |      |      |       | Mbn5 |      |      |
 	*                                 `--------------------'       `--------------------'
 	*/
 	// MEDIA AND MOUSE
@@ -158,11 +158,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 		KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_TRNS, KC_MPLY,
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
-		KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
-		KC_TRNS, KC_TRNS,
-		KC_TRNS,
-		KC_TRNS, KC_WFWD, KC_WBAK
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_WH_U,
+		KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_WH_D,
+		KC_MS_BTN3, KC_TRNS,
+		KC_MS_BTN4,
+		KC_MS_BTN5, KC_WFWD, KC_WBAK
 	),
 	/* Keymap 3:  Visual Studio Layer
 	*
