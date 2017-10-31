@@ -31,6 +31,7 @@
 #define MACRO_USING 25
 #define MACRO_GETSET 26
 #define MACRO_FORMAT 27
+#define MACRO_PROMISE 28
 
 enum custom_keycodes {
 	PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -112,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		LSFT(KC_F5),		KC_LCBR,	KC_RCBR,	KC_LBRC,		KC_RBRC,		KC_PIPE,	KC_TRNS,
 		LSFT(KC_F6),		KC_HOME,	KC_BSPC,	KC_DELT,		KC_ENT,			KC_ESC,
 		KC_TRNS,			KC_PERC,	KC_CIRC,	LCTL(KC_F4),	LSFT(KC_MINS),	KC_TILD,	LCTL(KC_BSLS),
-		KC_TRNS,			KC_F5,		KC_F10,		KC_F11, KC_F12,
+		KC_TRNS,			KC_F5,		KC_F10,		KC_F11, KC_TRNS,
 											RGB_MOD, RGB_VAD,
 													 RGB_VAI,
 									  KC_TRNS, EPRM, KC_TRNS,
@@ -178,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |--------+------+------+------+------+------|      |           |      |-----------+------+--------+------+------+--------|
 	* |        |TODO  |using |void  |bool  |break;|      |           |      |RTs NextTab|      |        |      |      |        |
 	* `--------+------+------+------+------+-------------'           `-------------+------+--------+------+------+--------'
-	*   |      | Alt  |getset|      |      |                                       |      |        |      |      |      |
+	*   |      | Alt  |getset|proms |      |                                       |      |        |      |      |      |
 	*   `----------------------------------'                                       `----------------------------------'
 	*                                        ,-------------.       ,-------------.
 	*                                        | F5   | F10  |       |      |      |
@@ -192,10 +193,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[VSFN] = LAYOUT_ergodox(
 		// left hand
 		KC_TRNS, KC_F1,				KC_F2, KC_F3, LALT(KC_F4), KC_F5, KC_TRNS,
-		KC_TRNS, M(MACRO_PUBLIC),	M(MACRO_STATIC), M(MACRO_STRING), M(MACRO_INT), M(MACRO_RETURN), KC_TRNS,
-		KC_TRNS, M(MACRO_PRIVATE),	M(MACRO_CONST), M(MACRO_VAR), M(MACRO_FLOAT), M(MACRO_NULL),
-		KC_TRNS, M(MACRO_TODO),		M(MACRO_USING), M(MACRO_VOID), M(MACRO_BOOL), M(MACRO_BREAK), KC_TRNS,
-		KC_TRNS, KC_LALT,			M(MACRO_GETSET), KC_TRNS, KC_TRNS,
+		KC_TRNS, M(MACRO_PUBLIC),	M(MACRO_STATIC),	M(MACRO_STRING),	M(MACRO_INT),	M(MACRO_RETURN),	KC_TRNS,
+		KC_TRNS, M(MACRO_PRIVATE),	M(MACRO_CONST),		M(MACRO_VAR),		M(MACRO_FLOAT), M(MACRO_NULL),
+		KC_TRNS, M(MACRO_TODO),		M(MACRO_USING),		M(MACRO_VOID),		M(MACRO_BOOL),  M(MACRO_BREAK),		KC_TRNS,
+		KC_TRNS, KC_LALT,			M(MACRO_GETSET),	M(MACRO_PROMISE),	KC_TRNS,
 										 KC_F5,			KC_F10,
 														KC_F11,
 						M(MACRO_FORMAT), LCTL(KC_4),	KC_F12,
@@ -317,6 +318,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 	case MACRO_FORMAT:
 		if (record->event.pressed) {
 			return MACRO(D(LCTL), T(E), T(D), U(LCTL), END);
+		}
+		break;
+
+	case MACRO_PROMISE:
+		if (record->event.pressed) {
+			SEND_STRING("return $.Deferred(function(dfd) { dfd.resolve(); }).promise();");
 		}
 		break;
 
